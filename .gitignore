@@ -1,6 +1,4 @@
-# .gitignore
-
-# General ignores (add your common ignores here)
+# General ignores
 .env
 .DS_Store
 
@@ -13,17 +11,15 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Backend node_modules (if applicable)
+# Node modules (backend and frontend)
 /backend/node_modules/
-/backend/dist
-/backend/.env
-
-# Frontend specific ignores
 /frontend/node_modules/
+node_modules/
+
+# Dist folders (backend and frontend)
+/backend/dist
 /frontend/dist
 /frontend/dist-ssr
-/frontend/*.local
-/backend/.env
 
 # Editor directories and files
 .vscode/*
