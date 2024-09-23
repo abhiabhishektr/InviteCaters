@@ -5,7 +5,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
-import { authMiddleware,errorHandler } from '../middlewares';
+import { authMiddleware, errorHandler, loggerMiddleware, responseHandler } from '../middlewares';
 import { adminRoutes, userRoutes, authRoutes } from '../routes';
 import { env } from '../config';
 
@@ -28,15 +28,17 @@ export class App {
         this.app.use(cookieParser());
         this.app.use(passport.initialize());
         this.app.use(morgan('dev'));
+        this.app.use(loggerMiddleware); 
         this.app.use(express.json());
+
+        this.app.use(responseHandler);
     }
 
     private configureRoutes(): void {
-        // Authentication routes
         this.app.use('/api/auth', authRoutes);
-
-        // Admin routes for user management
+        this.app.use('/api/users', userRoutes); 
         this.app.use('/api/admin/users', adminRoutes);
+        this.app.use(authMiddleware);
     }
 
     private setupErrorHandling(): void {

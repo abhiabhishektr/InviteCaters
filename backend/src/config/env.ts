@@ -9,6 +9,7 @@ interface EnvConfig {
     JWT_SECRET: string;
     TEST_KEY: string;
     DEFAULT_FRONTEND_LINK: string;
+    LOG_LEVEL: string;
 }
 
 const config: EnvConfig = {
@@ -18,6 +19,7 @@ const config: EnvConfig = {
     JWT_SECRET: process.env.JWT_SECRET || 'your_jwt_secret',
     TEST_KEY: process.env.TEST_KEY || 'your_test_key',
     DEFAULT_FRONTEND_LINK: process.env.DEFAULT_FRONTEND_LINK || 'DEFAULT_FRONTEND_LINK',
+    LOG_LEVEL: process.env.LOG_LEVEL || 'info',
 };
 
 export default config;

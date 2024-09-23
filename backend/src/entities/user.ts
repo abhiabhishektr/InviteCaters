@@ -6,7 +6,7 @@ const userSchema = new Schema({
     name: { type: String, required: true },
     password: { type: String, required: true },
     mobileNumber: { type: String, required: true },
-    deviceId: { type: String, required: true }, // Device identifier
+    deviceId: { type: String, required: true }, // Device identifier for single login 
     createdAt: { type: Date, default: Date.now }
 });
 

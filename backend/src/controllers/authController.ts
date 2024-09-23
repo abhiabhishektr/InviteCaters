@@ -1,23 +1,24 @@
 // backend/src/controllers/authController.ts
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { authService } from '../services/authService';
+import { sendResponse,errorHelper } from '../helpers';
 
-export const login = async (req: Request, res: Response) => {
+export const login = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email, password } = req.body;
         const token = await authService.login(email, password);
-        res.status(200).json({ token });
+        sendResponse(res, 200, { success: true, data: { token } });
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        next(errorHelper(error.message, 400)); 
     }
 };
 
-export const register = async (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const userData = req.body;
         const newUser = await authService.register(userData);
-        res.status(201).json(newUser);
+        sendResponse(res, 201, { success: true, data: newUser });
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        next(errorHelper(error.message, 400)); 
     }
 };
