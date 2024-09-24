@@ -76,4 +76,3 @@ InviteCaters/
 
 This project is proprietary to Zotocode and is not open-source. All rights reserved.
 
-Feel free to modify the `[Client Name]` placeholder and any other sections as needed!
