@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import { errorHelper } from '../helpers';
 
 interface CustomRequest extends Request {
     user?: any; //specific type if possible
@@ -9,12 +10,12 @@ export const authMiddleware = (req: CustomRequest, res: Response, next: NextFunc
     const token = req.cookies.token; // Assuming you are using cookies for the JWT
 
     if (!token) {
-        return res.status(401).json({ message: 'Unauthorized' });
+        return next(errorHelper('Unauthorized', 401));
     }
 
     jwt.verify(token, process.env.JWT_SECRET as string, (err: jwt.VerifyErrors | null, decoded: any) => {
         if (err) {
-            return res.status(403).json({ message: 'Forbidden' });
+            return next(errorHelper('Unauthorized', 401));
         }
         req.user = decoded; // Assuming `decoded` is your user payload from JWT
         next();

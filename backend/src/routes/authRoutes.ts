@@ -1,9 +1,9 @@
 // backend/src/interfaces/userRoutes.ts
 import { Router } from 'express';
-import { signIn } from '../controllers/userController';
+import { loginUser } from '../controllers';
 
 const router = Router();
 
-router.post('/signin', signIn);
+router.post('/signin', loginUser);
 
 export default router;

@@ -1,6 +1,17 @@
 // backend/src/index.ts
 import { App } from './main/app';
-import { env } from './config'; // Assuming you have an env file for configurations
+import { connectToDatabase, env } from './config';
 
 const app = new App();
-app.start(env.PORT || 5000);
+
+const startServer = async () => {
+    try {
+        await connectToDatabase();
+        app.start(env.PORT || 5000);
+    } catch (error) {
+        console.error("Failed to start server:", error);
+        process.exit(1);
+    }
+};
+
+startServer();
