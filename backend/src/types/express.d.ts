@@ -1,11 +1,11 @@
+// backend/src/types/express.d.ts
 declare global {
     namespace Express {
       interface Request {
-        startTime?: number; // Optional property to track request start time
+        startTime?: number; 
       }
     }
   }
   
-  // This line is necessary to ensure TypeScript treats this file as a module
   export {};
   
