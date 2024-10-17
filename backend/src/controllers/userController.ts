@@ -1,28 +1,15 @@
-// backend/src/controllers/userController.ts
+// /backend/src/controllers/userController.ts
 import { Request, Response, NextFunction } from 'express';
-import { User } from '../entities';
-import bcrypt from 'bcrypt';
-import { returnDTO,errorHelper ,sendResponse} from '../helpers';
+import { loginUseCase } from '../useCases';
+import { errorHelper, sendResponse } from '../helpers';
 
-export const signIn = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const { employeeId, password } = req.body;
-        const user = await User.findOne({ employeeId });
 
-        if (!user) return next(errorHelper('User not found', 404));
 
-        const passwordMatch = await bcrypt.compare(password, user.password);
-        if (!passwordMatch) return next(errorHelper('Invalid credentials', 401));
-
-        const currentDeviceId = req.headers['user-agent'] || 'unknown';
-        user.deviceId = currentDeviceId;
-
-        await user.save();
-
-        const userDTO = returnDTO(user, ['password', '__v']);
-
-        sendResponse(res, 200, { success: true, message: 'Sign-in successful', data: { user: userDTO } });
-    } catch (error) {
-        next(errorHelper(error.message, 500)); // Pass error to the error handler
-    }
+export const loginUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const user = await loginUseCase(req.body.employeeId, req.body.password,req.body.deviceId);
+    sendResponse(res, 200, { success: true, message: 'User logged in successfully', data: { user: user } });
+  } catch (error) {
+    next(errorHelper(error.message, 401));
+  }
 };

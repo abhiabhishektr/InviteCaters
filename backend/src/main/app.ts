@@ -20,24 +20,27 @@ export class App {
     }
 
     private configureMiddleware(): void {
-        this.app.use(cors({
-            origin: env.DEFAULT_FRONTEND_LINK,
+        const corsOptions = {
+            origin: env.NODE_ENV === 'production'
+                ? env.DEFAULT_FRONTEND_LINK
+                : true,
             methods: 'GET,POST,PUT,DELETE,PATCH',
             credentials: true,
-        }));
+        };
+
+        this.app.use(cors(corsOptions));
         this.app.use(cookieParser());
         this.app.use(passport.initialize());
         this.app.use(morgan('dev'));
-        this.app.use(loggerMiddleware); 
+        this.app.use(loggerMiddleware);
         this.app.use(express.json());
-
         this.app.use(responseHandler);
     }
 
     private configureRoutes(): void {
         this.app.use('/api/auth', authRoutes);
-        this.app.use('/api/users', userRoutes); 
-        this.app.use('/api/admin/users', adminRoutes);
+        this.app.use('/api/users', userRoutes);
+        this.app.use('/api/admin', adminRoutes);
         this.app.use(authMiddleware);
     }
 

@@ -1,14 +1,16 @@
 {
     "compilerOptions": {
       "target": "ESNext",
-      "module": "CommonJS", // Use CommonJS instead of ESNext
+      "module": "CommonJS", 
       "outDir": "./dist",
       "rootDir": "./src",
       "strict": true,
       "esModuleInterop": true,
       "useUnknownInCatchVariables": false,
       "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true
+      "forceConsistentCasingInFileNames": true,
+      "typeRoots": ["./src/types", "./node_modules/@types"], 
+      "types": ["node", "express"],  
     },
     "include": ["src"],
     "exclude": ["node_modules", "dist"]
