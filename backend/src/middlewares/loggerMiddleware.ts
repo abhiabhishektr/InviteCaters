@@ -19,6 +19,6 @@ export const loggerMiddleware = (req: Request, res: Response, next: NextFunction
       duration: duration ? `${duration}ms` : 'N/A' // Optional: Log request duration
     });
   });
-
+ 
   next();
 };
